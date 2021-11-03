@@ -12,10 +12,6 @@ loop = asyncio.get_event_loop()
 bot = Bot(BOT_TOKEN)
 dp = Dispatcher(bot)
 
-'Выход_🚪'
-
-
-
 @dp.message_handler(commands=['start'])
 async def process_hello(message: types.Message):
     await bot.send_message(message.from_user.id, 'Здравствуйте, пожалуйста зарегестрируйтесь или войдите. (Внимание вы запишитесь как {0.username} и если у вас нет аккаунта зарегистрируйтесь из-за этого ваши настройки не сохранятся и мы их не сложем вернуть!)'.format(message.from_user), reply_markup=kb.Mnum_1)
