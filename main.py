@@ -12,7 +12,7 @@ dp = Dispatcher(bot)
 
 @dp.message_handler(commands=['start'])
 async def process_hello(message: types.Message):
-    await bot.send_message(message.from_user.id, 'Здравствуйте, пожалуйста зарегестрируйтесь или войдите. (Внимание вы запишитесь как {0.username} и если у вас нет аккаунта зарегистрируйтесь из-за этого ваши настройки не сохранятся и мы их не сложем вернуть!)'.format(message.from_user), reply_markup=kb.Mnum_1)
+    await bot.send_message(message.from_user.id, 'Здравствуйте, пожалуйста зарегестрируйтесь или войдите. (Внимание вы запишитесь как {0.username} и если у вас нет аккаунта зарегистрируйтесь! Если вы зарегистрировались но у вас еть аккаун просто нажмите выход! Если вы просто так нажмёте "Регистрация" и у вас есть аккаунт из-за этого у вас откроется новое окно и оно не будет сохронять ввод. Если у вас нет аккаунта и вы нажмёте "Вход" вы не сохранитесь и мы не сможем вернуть данные!)'.format(message.from_user), reply_markup=kb.Mnum_1)
 
 @dp.message_handler(commands=['регистрация_📃'])
 async def process_hello(message: types.Message):
@@ -54,6 +54,31 @@ async def process_hello(message: types.Message):
 async def process_hello(message: types.Message):
     await bot.send_message(message.from_user.id, 'Вот сводка новостей', reply_markup=kb.MNews)
 
+@dp.message_handler(commands=['📈_Крипто'])
+async def process_hello(message: types.Message):
+    await bot.send_message(message.from_user.id, 'Цены на крипту! (Внимание цены в 💵!)', reply_markup=kb.MKnum)
+
+@dp.message_handler(commands=['Крипто'])
+async def process_hello(message: types.Message):
+    await bot.send_message(message.from_user.id, 'Новости по крипте!', reply_markup=kb.MKnum)
+
+@dp.message_handler(commands=['Назад'])
+async def process_hello(message: types.Message):
+    await bot.send_message(message.from_user.id, 'Назад!', reply_markup=kb.Mnum_2)
+
+@dp.message_handler(commands=['⭐_Избранное'])
+async def process_hello(message: types.Message):
+    await bot.send_message(message.from_user.id, 'Избранное', reply_markup=kb.Mnum_2)
+
+@dp.message_handler(commands=['Bitcoin'])
+async def process_hello(message: types.Message):
+    await bot.send_message(message.from_user.id, 'Bitcoin!', reply_markup=kb.MBitcoin)
+
+@dp.message_handler(commands=['🌟_добавить_в_избранное_Bitcoin'])
+async def process_hello(message: types.Message):
+    await bot.send_message(message.from_user.id, 'В избранном Bitcoin!', reply_markup=kb.MBitcoin)
+
 if __name__ == "__main__":
     from handlers import dp, send_to_admin
     executor.start_polling(dp, on_startup=send_to_admin)
+
