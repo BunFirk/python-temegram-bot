@@ -1,9 +1,7 @@
 import asyncio
-import requests
+import sqlite3
 
 from aiogram import Bot, Dispatcher, executor, types
-
-import sqlite3
 
 import keyb as kb
 from config import BOT_TOKEN
@@ -19,23 +17,23 @@ async def process_hello(message: types.Message):
 @dp.message_handler(commands=['регистрация_📃'])
 async def process_hello(message: types.Message):
     await bot.send_message(message.from_user.id, 'Добро пожаловать, {0.username}!'.format(message.from_user), reply_markup=kb.Mnum_2)
-    conn = sqlite3.connect('users.db')
+    conn = sqlite3.connect('People.db')
 
     cur = conn.cursor()
 
-    cur.execute('INSERT INTO users VALUES ("{0.username}", NULL, "{0.id}");'.format(message.from_user))
+    cur.execute('INSERT INTO Users VALUES ("{0.username}", NULL, "{0.id}");'.format(message.from_user))
     conn.commit()
 
 @dp.message_handler(commands=['Вход_📄'])
 async def process_hello(message: types.Message):
     await bot.send_message(message.from_user.id, 'Здравствуйте, {0.username}!'.format(message.from_user), reply_markup=kb.Mnum_2)
     conn = sqlite3.connect('users.db')
-
+    '''
     cur = conn.cursor()
 
-    cur.execute('SELECT *FROM users WHERE username = "{0.username}";'.format(message.from_user))
+    cur.execute('SELECT *FROM Users WHERE username = "Programmer_f" AND userid = "1350804202";'.format(message.from_user))
     conn.commit()
-
+    '''
 @dp.message_handler(commands=['регистрация_📃'])
 async def process_hello(message: types.Message):
     await bot.send_message(message.from_user.id, 'Здравствуйте, {0.username}!'.format(message.from_user), reply_markup=kb.Mnum_2)
@@ -52,6 +50,10 @@ async def process_hello(message: types.Message):
 @dp.message_handler(commands=['доллар_руб_💵'])
 async def process_hello(message: types.Message):
     await bot.send_message(message.from_user.id, 'этого нету пока что.', reply_markup=kb.Mnum_2)
+
+@dp.message_handler(commands=['📰_Новости'])
+async def process_hello(message: types.Message):
+    await bot.send_message(message.from_user.id, 'Вот сводка новостей', reply_markup=kb.MNews)
 
 if __name__ == "__main__":
     from handlers import dp, send_to_admin
