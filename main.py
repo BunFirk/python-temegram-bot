@@ -74,11 +74,6 @@ async def process_hello(message: types.Message):
 async def process_hello(message: types.Message):
     await bot.send_message(message.from_user.id, 'Bitcoin!', reply_markup=kb.MBitcoin)
 
-@dp.message_handler(commands=['🌟_добавить_в_избранное_Bitcoin'])
-async def process_hello(message: types.Message):
-    await bot.send_message(message.from_user.id, 'В избранном Bitcoin!', reply_markup=kb.MBitcoin)
-
 if __name__ == "__main__":
     from handlers import dp, send_to_admin
     executor.start_polling(dp, on_startup=send_to_admin)
-
