@@ -66,9 +66,9 @@ async def process_hello(message: types.Message):
 async def process_hello(message: types.Message):
     await bot.send_message(message.from_user.id, 'Назад!', reply_markup=kb.Mnum_2)
 
-@dp.message_handler(commands=['⭐_Избранное'])
+@dp.message_handler(commands=['⚙_Настройки'])
 async def process_hello(message: types.Message):
-    await bot.send_message(message.from_user.id, 'Избранное', reply_markup=kb.Mnum_2)
+    await bot.send_message(message.from_user.id, 'Настройки', reply_markup=kb.Mse)
 
 @dp.message_handler(commands=['Bitcoin'])
 async def process_hello(message: types.Message):
