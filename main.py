@@ -27,11 +27,12 @@ async def process_hello(message: types.Message):
 @dp.message_handler(commands=['Вход_📄'])
 async def process_hello(message: types.Message):
     await bot.send_message(message.from_user.id, 'Здравствуйте, {0.username}!'.format(message.from_user), reply_markup=kb.Mnum_2)
-    conn = sqlite3.connect('users.db')
-    '''
-    Error 😔
-    '''
- 
+    conn = sqlite3.connect('People.db')
+    cur = conn.cursor()
+
+    cur.execute('SELECT *FROM Users WHERE username = "Programmer_f" AND userid = "1350804202";'.format(message.from_user))
+    conn.commit()
+
 @dp.message_handler(commands=['регистрация_📃'])
 async def process_hello(message: types.Message):
     await bot.send_message(message.from_user.id, 'Здравствуйте, {0.username}!'.format(message.from_user), reply_markup=kb.Mnum_2)
