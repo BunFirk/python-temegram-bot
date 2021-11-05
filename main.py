@@ -90,10 +90,6 @@ async def process_hello(message: types.Message):
 async def process_hello(message: types.Message):
     await bot.send_message(message.from_user.id, 'Новости о Binance Coin! https://ru.investing.com/crypto/binance-coin/news', reply_markup=kb.MNBinance_Coin)
 
-@dp.message_handler(commands=['Binance_Coin_News'])
-async def process_hello(message: types.Message):
-    await bot.send_message(message.from_user.id, 'Новости о Binance Coin! https://ru.investing.com/crypto/binance-coin/news', reply_markup=kb.MNBinance_Coin)
-
 @dp.message_handler(commands=['📈_Акции'])
 async def process_hello(message: types.Message):
     await bot.send_message(message.from_user.id, 'Акции!', reply_markup=kb.MNBinance_Coin)
