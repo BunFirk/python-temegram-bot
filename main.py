@@ -6,6 +6,52 @@ from aiogram import Bot, Dispatcher, executor, types
 import keyb as kb
 from config import BOT_TOKEN
 
+import requests
+from bs4 import BeautifulSoup
+
+URL = 'https://www.tinkoff.ru/invest/stocks/?country=All&orderType=Asc&sortType=ByName&start=0&end=12'
+HEADERS = {
+    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36',
+    'accept': '*/*'}
+
+
+def get_HtmlSource(url, params=None):
+    result = requests.get(url, headers=HEADERS, params=params)
+    return result
+
+
+def get_content(source):
+    soup = BeautifulSoup(source.text, "html.parser")
+    Stock = soup.find_all('a', {"href": '/invest/stocks/MMM/'})
+
+    Stock_Price = 0
+    Stock_Name = ""
+    Stock_Currency = ""
+
+    item = Stock[0]
+    name = item.find('span', {"class": "NameColumn__nameWrapper_177eF"}).get_text()
+    Name = name
+    item = Stock[2]
+    price = item.find(("span", {"class": "Money-module__money_3h4MT"})).get_text()
+    Price = price
+
+    print(Name)
+    print(Price)
+
+
+def parse():
+    source = get_HtmlSource(URL)
+
+    if source.status_code == 200:
+        get_content(source)
+    else:
+        print("Request failed")
+
+
+parse()
+
+"Price"
+
 loop = asyncio.get_event_loop()
 bot = Bot(BOT_TOKEN)
 dp = Dispatcher(bot)
@@ -60,7 +106,7 @@ async def process_hello(message: types.Message):
 
 @dp.message_handler(commands=['Крипто'])
 async def process_hello(message: types.Message):
-    await bot.send_message(message.from_user.id, 'Новости по крипте!', reply_markup=kb.MKnum)
+    await bot.send_message(message.from_user.id, 'Новости по крипте!', reply_markup=kb.MnBitcoin_2)
 
 @dp.message_handler(commands=['Назад'])
 async def process_hello(message: types.Message):
@@ -73,6 +119,30 @@ async def process_hello(message: types.Message):
 @dp.message_handler(commands=['Bitcoin'])
 async def process_hello(message: types.Message):
     await bot.send_message(message.from_user.id, 'Bitcoin!', reply_markup=kb.MBitcoin)
+
+@dp.message_handler(commands=['Bitcoin_News'])
+async def process_hello(message: types.Message):
+    await bot.send_message(message.from_user.id, 'Новости о Bitcoin! https://ru.investing.com/crypto/bitcoin/news', reply_markup=kb.MnBitcoin_3)
+
+@dp.message_handler(commands=['Ethereum'])
+async def process_hello(message: types.Message):
+    await bot.send_message(message.from_user.id, 'Ethereum!', reply_markup=kb.MEthereum)
+
+@dp.message_handler(commands=['Ethereum_News'])
+async def process_hello(message: types.Message):
+    await bot.send_message(message.from_user.id, 'Новости о Ethereum! https://ru.investing.com/crypto/ethereum/news', reply_markup=kb.MNEthereum)
+
+@dp.message_handler(commands=['Binance_Coin_News'])
+async def process_hello(message: types.Message):
+    await bot.send_message(message.from_user.id, 'Новости о Binance Coin! https://ru.investing.com/crypto/binance-coin/news', reply_markup=kb.MNBinance_Coin)
+
+@dp.message_handler(commands=['Binance_Coin_News'])
+async def process_hello(message: types.Message):
+    await bot.send_message(message.from_user.id, 'Новости о Binance Coin! https://ru.investing.com/crypto/binance-coin/news', reply_markup=kb.MNBinance_Coin)
+
+@dp.message_handler(commands=['📈_Акции'])
+async def process_hello(message: types.Message):
+    await bot.send_message(message.from_user.id, 'Акции!', reply_markup=kb.MNBinance_Coin)
 
 if __name__ == "__main__":
     from handlers import dp, send_to_admin
