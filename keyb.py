@@ -31,7 +31,7 @@ btnnum18 = KeyboardButton("/Вывести_график_Bitcoin")
 MBitcoin = ReplyKeyboardMarkup(resize_keyboard=True).add(btnnum18).add(btnnum23).add(Back)
 
 btnnum5 = KeyboardButton("/Выход_🚪")
-btnnum20 = KeyboardButton("/Частота_отправки_цены")
+btnnum20 = KeyboardButton("/Текст")
 Mse = ReplyKeyboardMarkup(resize_keyboard=True).add(btnnum20).add(btnnum5).add(Back)
 
 MNBitcoin = ReplyKeyboardMarkup(resize_keyboard=True).add(btnnum23).add(Back)
