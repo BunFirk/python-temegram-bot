@@ -52,3 +52,6 @@ MNEthereum = ReplyKeyboardMarkup(resize_keyboard=True).add(btnnum24).add(Back)
 
 btnnum28 = KeyboardButton("/Узнать_цену_Binance_Coin")
 MNBinance_Coin = ReplyKeyboardMarkup(resize_keyboard=True).add(btnnum28).add(Back)
+
+
+Ak = ReplyKeyboardMarkup(resize_keyboard=True).add(Back)
