@@ -92,7 +92,7 @@ async def process_hello(message: types.Message):
 
 @dp.message_handler(commands=['📈_Акции'])
 async def process_hello(message: types.Message):
-    await bot.send_message(message.from_user.id, 'Акции!', reply_markup=kb.MNBinance_Coin)
+    await bot.send_message(message.from_user.id, 'Введите тикет Акции!', reply_markup=kb.Ak)
 
 if __name__ == "__main__":
     from handlers import dp, send_to_admin
