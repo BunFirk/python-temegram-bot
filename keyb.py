@@ -55,3 +55,8 @@ MNBinance_Coin = ReplyKeyboardMarkup(resize_keyboard=True).add(btnnum28).add(Bac
 
 
 Ak = ReplyKeyboardMarkup(resize_keyboard=True).add(Back)
+
+btnnum29 = KeyboardButton("/рубль_доллор")
+btnnum30 = KeyboardButton("/рубль_юань")
+btnnum31 = KeyboardButton("/рубль_евро")
+NM = ReplyKeyboardMarkup(resize_keyboard=True).add(btnnum29).add(btnnum30).add(btnnum31).add(Back)
