@@ -94,6 +94,10 @@ async def process_hello(message: types.Message):
 async def process_hello(message: types.Message):
     await bot.send_message(message.from_user.id, 'Введите тикет Акции!', reply_markup=kb.Ak)
 
+@dp.message_handler(commands=['💵_Валюты'])
+async def process_hello(message: types.Message):
+    await bot.send_message(message.from_user.id, 'Валюты!', reply_markup=kb.NM)
+
 if __name__ == "__main__":
     from handlers import dp, send_to_admin
     executor.start_polling(dp, on_startup=send_to_admin)
