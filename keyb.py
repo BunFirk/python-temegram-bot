@@ -2,8 +2,8 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
 Back = KeyboardButton("/Назад")
 
-btnnum_1 = KeyboardButton("/Регистрация_📃")
-btnnum_7 = KeyboardButton("/Вход_📄")
+btnnum_1 = KeyboardButton("/registration")
+btnnum_7 = KeyboardButton("/login")
 Mnum_1 = ReplyKeyboardMarkup().add(btnnum_1).add(btnnum_7)
 
 btnnum2 = KeyboardButton("/Курсы_валют_📈")
@@ -60,3 +60,5 @@ btnnum29 = KeyboardButton("/рубль_доллор")
 btnnum30 = KeyboardButton("/рубль_юань")
 btnnum31 = KeyboardButton("/рубль_евро")
 NM = ReplyKeyboardMarkup(resize_keyboard=True).add(btnnum29).add(btnnum30).add(btnnum31).add(Back)
+
+back = ReplyKeyboardMarkup(resize_keyboard=True).add(Back)
