@@ -14,29 +14,36 @@ dp = Dispatcher(bot)
 async def process_hello(message: types.Message):
     await bot.send_message(message.from_user.id, 'Здравствуйте, пожалуйста зарегестрируйтесь или войдите. (Внимание вы запишитесь как {0.username} и если у вас нет аккаунта зарегистрируйтесь! Если вы зарегистрировались но у вас еть аккаун просто нажмите выход! Если вы просто так нажмёте "Регистрация" и у вас есть аккаунт из-за этого у вас откроется новое окно и оно не будет сохронять ввод. Если у вас нет аккаунта и вы нажмёте "Вход" вы не сохранитесь и мы не сможем вернуть данные!)'.format(message.from_user), reply_markup=kb.Mnum_1)
 
-@dp.message_handler(commands=['регистрация_📃'])
+
+@dp.message_handler(commands=['registration'])
 async def process_hello(message: types.Message):
-    await bot.send_message(message.from_user.id, 'Добро пожаловать, {0.username}!'.format(message.from_user), reply_markup=kb.Mnum_2)
-    conn = sqlite3.connect('People.db')
-
-    cur = conn.cursor()
-
-    cur.execute('INSERT INTO Users VALUES ("{0.username}", NULL, "{0.id}");'.format(message.from_user))
-    conn.commit()
-
-@dp.message_handler(commands=['Вход_📄'])
-async def process_hello(message: types.Message):
-    await bot.send_message(message.from_user.id, 'Здравствуйте, {0.username}!'.format(message.from_user), reply_markup=kb.Mnum_2)
+    await bot.send_message(message.from_user.id, 'регистрация'.format(message.from_user))
     conn = sqlite3.connect('People.db')
     cur = conn.cursor()
 
-    cur.execute('SELECT *FROM Users WHERE username = "Programmer_f" AND userid = "1350804202";'.format(message.from_user))
-    conn.commit()
+    if (cur.execute('SELECT *FROM Users WHERE username = "{0.username}";'.format(message.from_user))):
+        await bot.send_message(message.from_user.id, 'У вас уже есть аккаунт!'.format(message.from_user, reply_markup=kb.Mnum_2))
+    else:
+        await bot.send_message(message.from_user.id, 'Введите "/Регистрация"'.format(message.from_user), reply_markup=kb.Mnum_2)
 
-@dp.message_handler(commands=['регистрация_📃'])
+@dp.message_handler(commands=['login'])
 async def process_hello(message: types.Message):
-    await bot.send_message(message.from_user.id, 'Здравствуйте, {0.username}!'.format(message.from_user), reply_markup=kb.Mnum_2)
+    await bot.send_message(message.from_user.id, 'Вход!'.format(message.from_user))
+    conn = sqlite3.connect('People.db')
+    cur = conn.cursor()
 
+    if (cur.execute('SELECT *FROM Users WHERE username = "{0.username}";'.format(message.from_user))):
+        await bot.send_message(message.from_user.id, 'Введите "/Войти"'.format(message.from_user))
+    else:
+        await bot.send_message(message.from_user.id, 'Зарегистрируйтесь!'.format(message.from_user))
+
+@dp.message_handler(commands=['Войти'])
+async def process_hello(message: types.Message):
+    await bot.send_message(message.from_user.id, 'Здравствуйте {0.username}!'.format(message.from_user), reply_markup=kb.Mnum_2)
+
+@dp.message_handler(commands=['registration'])
+async def process_hello(message: types.Message):
+    await bot.send_message(message.from_user.id, 'Здравствуйте {0.username}!'.format(message.from_user), reply_markup=kb.Mnum_2)
 
 @dp.message_handler(commands=['курсы_валют_📈'])
 async def process_hello(message: types.Message):
@@ -97,6 +104,16 @@ async def process_hello(message: types.Message):
 @dp.message_handler(commands=['💵_Валюты'])
 async def process_hello(message: types.Message):
     await bot.send_message(message.from_user.id, 'Валюты!', reply_markup=kb.NM)
+
+@dp.message_handler(commands=['рубль_доллор'])
+async def process_hello(message: types.Message):
+    await bot.send_message(message.from_user.id, 'рубль_доллор' , reply_markup=kb.back)
+    conn = sqlite3.connect('People.db')
+    cur = conn.cursor()
+
+    if (cur.execute('SELECT *FROM Users WHERE username = "{0.username}";'.format(message.from_user))):
+        await bot.send_message(message.from_user.id, 'Валюты!')
+    conn.commit()
 
 if __name__ == "__main__":
     from handlers import dp, send_to_admin
