@@ -6,9 +6,49 @@ from aiogram import Bot, Dispatcher, executor, types
 import keyb as kb
 from config import BOT_TOKEN
 
+import requests # For Http requests
+from bs4 import BeautifulSoup # For working with Html Script
+
+URL = "https://www.tinkoff.ru/invest/currencies/" # Url of parsing page
+HEADERS = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36',
+           'accept': '*/*'} # Headers that will be sended to the page
+Name = ""
+Price = ""
+
+def get_Html(url, params = None):
+    result = requests.get(url, headers=HEADERS, params=params) # Making Http request
+    return result
+
+def get_CurrencyContent(source):
+    global Name
+    global Price
+    soup = BeautifulSoup(source.text, "html.parser")
+    Currency = soup.find_all('a', {"href": '/invest/currencies/USDRUB/'})
+
+    item = Currency[0]
+    Name = item.find('span', {"class": "NameColumn__nameWrapper_LWKdK"}).get_text() # Writing the Name of currency
+    item = Currency[2]
+    Price = item.find(("span", {"class": "Money-module__money_UwC2N"})).get_text() # Writing the Price of currency
+
+    #print(Name)
+    #print(Price)
+
+def parse():
+    Html_script = get_Html(URL) # Writing Html Script in variable
+
+    if Html_script.status_code == 200:
+        get_CurrencyContent(Html_script) # Calling function that getting data
+    else:
+        print("Request failed") # Error
+
+
+
+
 loop = asyncio.get_event_loop()
 bot = Bot(BOT_TOKEN)
 dp = Dispatcher(bot)
+
+Curr_Ticker = ""
 
 @dp.message_handler(commands=['start'])
 async def process_hello(message: types.Message):
@@ -107,13 +147,57 @@ async def process_hello(message: types.Message):
 
 @dp.message_handler(commands=['рубль_доллор'])
 async def process_hello(message: types.Message):
-    await bot.send_message(message.from_user.id, 'рубль_доллор' , reply_markup=kb.back)
+    global Curr_Ticker
+    parse()
+    await bot.send_message(message.from_user.id, Price, reply_markup=kb.NM_2)
     conn = sqlite3.connect('People.db')
     cur = conn.cursor()
+    Curr_Ticker = "USDRUB"
 
-    if (cur.execute('SELECT *FROM Users WHERE username = "{0.username}";'.format(message.from_user))):
-        await bot.send_message(message.from_user.id, 'Валюты!')
-    conn.commit()
+@dp.message_handler(commands=['рубль_юань'])
+async def process_hello(message: types.Message):
+    global Curr_Ticker
+    parse()
+    await bot.send_message(message.from_user.id, Price, reply_markup=kb.NM_2)
+    conn = sqlite3.connect('People.db')
+    cur = conn.cursor()
+    Curr_Ticker = "CNYRUB"
+
+@dp.message_handler(commands=['рубль_евро'])
+async def process_hello(message: types.Message):
+    global Curr_Ticker
+    parse()
+    await bot.send_message(message.from_user.id, Price, reply_markup=kb.back)
+    conn = sqlite3.connect('People.db')
+    cur = conn.cursor()
+    Curr_Ticker = "EURRUB"
+
+@dp.message_handler(commands=['рубль_Швейцарский_Франк'])
+async def process_hello(message: types.Message):
+    global Curr_Ticker
+    parse()
+    await bot.send_message(message.from_user.id, Price, reply_markup=kb.NM_2)
+    conn = sqlite3.connect('People.db')
+    cur = conn.cursor()
+    Curr_Ticker = "CHFRUB"
+
+@dp.message_handler(commands=['рубль_Фунт'])
+async def process_hello(message: types.Message):
+    global Curr_Ticker
+    parse()
+    await bot.send_message(message.from_user.id, Price, reply_markup=kb.NM_2)
+    conn = sqlite3.connect('People.db')
+    cur = conn.cursor()
+    Curr_Ticker = "GBPRUB"
+
+@dp.message_handler(commands=['рубль_Иена'])
+async def process_hello(message: types.Message):
+    global Curr_Ticker
+    parse()
+    await bot.send_message(message.from_user.id, Price, reply_markup=kb.NM_2)
+    conn = sqlite3.connect('People.db')
+    cur = conn.cursor()
+    Curr_Ticker = "JPYRUB"
 
 if __name__ == "__main__":
     from handlers import dp, send_to_admin
