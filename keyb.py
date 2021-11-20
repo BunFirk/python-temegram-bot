@@ -59,6 +59,12 @@ Ak = ReplyKeyboardMarkup(resize_keyboard=True).add(Back)
 btnnum29 = KeyboardButton("/рубль_доллор")
 btnnum30 = KeyboardButton("/рубль_юань")
 btnnum31 = KeyboardButton("/рубль_евро")
+btnnum32 = KeyboardButton("/рубль_Швейцарский_Франк")
+btnnum33 = KeyboardButton("/рубль_Фунт")
+btnnum34 = KeyboardButton("/рубль_Иена")
 NM = ReplyKeyboardMarkup(resize_keyboard=True).add(btnnum29).add(btnnum30).add(btnnum31).add(Back)
+
+btnnum35 = KeyboardButton("/Узнать цену ещё раз")
+NM_2 = ReplyKeyboardMarkup(resize_keyboard=True).add(btnnum35).add(Back)
 
 back = ReplyKeyboardMarkup(resize_keyboard=True).add(Back)
